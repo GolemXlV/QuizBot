@@ -80,6 +80,21 @@ services:
       - main
     restart: on-failure
 
+  tg_bot:
+    image: app-image
+    hostname: bot
+    restart: on-failure
+    environment:
+      - BOT_TOKEN
+      - BOT_WEBHOOK=false
+      - BOT_WEBHOOK_PORT=8443
+    command: sh -c "python manage.py start_bot"
+    depends_on:
+     - postgres
+    ports:
+      - 8443:8443
+
+
 networks:
   main:
 
