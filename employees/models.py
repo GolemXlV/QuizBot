@@ -9,8 +9,6 @@ from .messages import PHONE_VALIDATION_MSG
 
 class Employee(models.Model):
     phone_regex = RegexValidator(regex=r'^\+?1?\d{9,15}$', message=PHONE_VALIDATION_MSG)
-
-    user = models.OneToOneField(User, on_delete=models.CASCADE, verbose_name=_("User"))
     phone_number = models.CharField(validators=[phone_regex], max_length=17,
                                     blank=False, verbose_name=_("Phone number"))
     full_name = models.CharField(max_length=300, verbose_name=_("Full name"))
@@ -19,3 +17,16 @@ class Employee(models.Model):
     class Meta:
         verbose_name = _("Employee")
         verbose_name_plural = _("Employees")
+
+
+class TGUser(models.Model):
+    employee = models.OneToOneField(Employee, on_delete=models.CASCADE, primary_key=True)
+
+    tg_id = models.CharField(max_length=300, verbose_name=_("Telegram ID"))
+    username = models.CharField(max_length=300, verbose_name=_("Telegram user name"))
+    first_name = models.CharField(max_length=300, verbose_name=_("Telegram first name"))
+    last_name = models.CharField(max_length=300, verbose_name=_("Telegram last name"))
+
+    class Meta:
+        verbose_name = _("Telegram user")
+        verbose_name_plural = _("Telegram users")

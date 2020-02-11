@@ -8,3 +8,37 @@ services:
       - "8000:8000"
     volumes:
       - .:/usr/src/app
+
+  tg_bot:
+    image: app-image
+    hostname: bot
+    container_name: tg_bot
+    restart: on-failure
+    environment:
+      - BOT_TOKEN
+      - BOT_WEBHOOK=false
+      - BOT_WEBHOOK_PORT=8443
+      - HTTPS_PROXY=https://proxy:5566
+    command: sh -c "python manage.py start_bot --debug"
+    links:
+      - proxy
+      - postgres
+    depends_on:
+      - postgres
+    ports:
+      - 8443:8443
+    networks:
+      - main
+    volumes:
+      - .:/usr/src/app
+
+  proxy:
+    image: mattes/rotating-proxy:latest
+    container_name: proxy
+    ports:
+      - 5566:5566
+      - 4444:4444
+    environment:
+      - tors=25
+    networks:
+      - main

@@ -91,6 +91,8 @@ services:
     command: sh -c "python manage.py start_bot"
     depends_on:
      - postgres
+    networks:
+     - main
     ports:
       - 8443:8443
 
