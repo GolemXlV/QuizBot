@@ -14,6 +14,9 @@ class Question(models.Model):
 
     objects = QuestionManager()
 
+    def __str__(self):
+        return f"Вопрос №{self.pk}"
+
     class Meta:
         verbose_name = _("Question")
         verbose_name_plural = _("Questions")
@@ -24,6 +27,9 @@ class Choice(models.Model):
     choice_text = models.CharField(max_length=200, verbose_name=_("Answer text"))
     comment = models.CharField(max_length=200, verbose_name=_("Comment"))
     votes = models.IntegerField(default=0, verbose_name=_("Vote"))
+
+    def __str__(self):
+        return f"Ответ №{self.pk}"
 
     class Meta:
         verbose_name = _("Choice")
@@ -43,6 +49,9 @@ class Poll(models.Model):
     date_closed = models.DateTimeField(blank=True, null=True, verbose_name=_("Date closed"))
 
     objects = PollManager()
+
+    def __str__(self):
+        return f"Голосование №{self.pk}"
 
     class Meta:
         verbose_name = _("Poll")

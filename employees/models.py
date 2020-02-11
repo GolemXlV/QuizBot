@@ -14,6 +14,9 @@ class Employee(models.Model):
     full_name = models.CharField(max_length=300, verbose_name=_("Full name"))
     department = models.CharField(max_length=100, verbose_name=_("Department"))
 
+    def __str__(self):
+        return f"Сотрудник №{self.pk}"
+
     class Meta:
         verbose_name = _("Employee")
         verbose_name_plural = _("Employees")
@@ -26,6 +29,9 @@ class TGUser(models.Model):
     username = models.CharField(max_length=300, verbose_name=_("Telegram user name"))
     first_name = models.CharField(max_length=300, verbose_name=_("Telegram first name"))
     last_name = models.CharField(max_length=300, verbose_name=_("Telegram last name"))
+
+    def __str__(self):
+        return f"Телеграм ID №{self.pk}"
 
     class Meta:
         verbose_name = _("Telegram user")
