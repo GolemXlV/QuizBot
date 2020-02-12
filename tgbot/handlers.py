@@ -7,11 +7,26 @@ from collections import OrderedDict
 from .base import TelegramBotApi
 from .utils import logger, build_menu, encode_callback_data, decode_callback_data
 import random
-from .filters import FilterGetQuestion, FilterHelpCommand
+from .filters import FilterGetQuestion, FilterHelpCommand, filter_get_question, filter_help_command
+
+
 #
 # button_list =[
 #     InlineKeyboardButton()
 # ]
+
+
+def send_buttons(api: TelegramBotApi, update):
+    buttons_list = [
+        KeyboardButton("Пройти тест"),
+        KeyboardButton("Помощь"),
+    ]
+    reply_markup = ReplyKeyboardMarkup(build_menu(buttons_list, n_cols=len(buttons_list)), resize_keyboard=True)
+    msg = """Выберите пункт меню. Для прохождения случайного теста используйте команды: 
+            /get_question для получения случайного вопроса
+            /start_poll для того чтобы начать тест 
+            /help для помощи."""
+    api.bot.send_message(update.message.chat_id, msg, reply_markup=reply_markup)
 
 
 @run_async
@@ -24,16 +39,7 @@ def start_handler(api: TelegramBotApi, update):
                                            resize_keyboard=True, one_time_keyboard=True)
         api.bot.send_message(update.message.chat_id, "Запрос номера мобильного телефона", reply_markup=reply_markup)
     else:
-        buttons_list = [
-            KeyboardButton("Пройти тест"),
-            KeyboardButton("Помощь"),
-        ]
-        reply_markup = ReplyKeyboardMarkup(build_menu(buttons_list, n_cols=len(buttons_list)), resize_keyboard=True)
-        msg = """Выберите пункт меню. Для прохождения случайного теста используйте команды: 
-        /get_question для получения случайного вопроса
-        /start_poll для того чтобы начать тест 
-        /help для помощи."""
-        api.bot.send_message(update.message.chat_id, msg, reply_markup=reply_markup)
+        send_buttons(api, update)
 
 
 @run_async
@@ -50,10 +56,12 @@ def contact_callback(api: TelegramBotApi, update):
     employee = api.get_employee_by_phone(phone)
     if not employee:
         msg = "Вас нет в базе, обратитесь в офис по таким-то контактам."
+        api.bot.send_message(update.message.chat_id, msg)
     else:
         api.create_user(update.message.chat_id, employee)
         msg = f"Вы успешно авторизованы как пользователь {employee.full_name} из департамента {employee.department}."
-    api.bot.send_message(update.message.chat_id, msg)
+        api.bot.send_message(update.message.chat_id, msg)
+        send_buttons(api, update)
 
 
 @run_async
@@ -67,8 +75,13 @@ def answer_handler(api: TelegramBotApi, update):
         return
     answer = api.get_answer(callback_obj['cid'])
     if answer:
-        api.bot.send_message(callback_obj['u'], f"Комментарий: {answer.comment}. Получено баллов: {answer.votes}")
         if "pid" in callback_obj and "st" in callback_obj:
+            poll = api.get_poll(callback_obj["pid"])
+            if int(callback_obj["st"]) < poll.state:
+                api.bot.send_message(callback_obj['u'], f"Вы уже ответили на этот вопрос.")
+                return
+
+            api.bot.send_message(callback_obj['u'], f"Комментарий: {answer.comment}. Получено баллов: {answer.votes}")
             callback_obj["st"] = int(callback_obj["st"]) + 1
             poll = api.update_poll(callback_obj["pid"], callback_obj["st"], answer.votes)
             if not poll.closed:
@@ -76,6 +89,8 @@ def answer_handler(api: TelegramBotApi, update):
                 get_question_handler(api, update, uid=callback_obj["u"], qid=question_id, pid=poll.pk, st=int(poll.state))
             else:
                 api.bot.send_message(callback_obj['u'], f"Тест завершён. Набрано баллов: {poll.votes}")
+        else:
+            api.bot.send_message(callback_obj['u'], f"Комментарий: {answer.comment}. Получено баллов: {answer.votes}")
 
     else:
         api.bot.send_message(callback_obj['u'], "Неправильный запрос")
@@ -124,7 +139,8 @@ handlers = [
     CommandHandler("get_question", get_question_handler),
     CommandHandler("start_poll", start_poll_handler),
     CommandHandler("help", help_handler),
-    # MessageHandler(FilterGetQuestion, get_question_handler),
-    # MessageHandler(FilterHelpCommand, help_handler),
+    MessageHandler(filter_get_question, start_poll_handler),
+    MessageHandler(filter_help_command, help_handler),
+    MessageHandler(Filters.contact, contact_callback),
     CallbackQueryHandler(answer_handler),
 ]
