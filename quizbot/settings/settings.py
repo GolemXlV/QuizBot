@@ -149,6 +149,8 @@ STATIC_ROOT = '/static'
 # Celery config
 CELERY_BROKER_URL= 'pyamqp://rabbitmq:5672'
 CELERY_RESULT_BACKEND = 'django-db'
+CELERY_TASK_SERIALIZER = 'pickle'
+CELERY_ACCEPT_CONTENT = ['pickle']
 CELERY_BEAT_SCHEDULE = {
     'queue_every_five_mins': {
         'task': 'polls.tasks.query_every_five_mins',

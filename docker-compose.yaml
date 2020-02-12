@@ -50,6 +50,9 @@ services:
       - app
       - postgres
       - rabbitmq
+    environment:
+      - BOT_TOKEN
+      - C_FORCE_ROOT=true
     deploy:
       replicas: 2
       restart_policy:

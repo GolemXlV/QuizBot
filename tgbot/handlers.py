@@ -1,5 +1,6 @@
+from telegram.ext.dispatcher import run_async
 from telegram import InlineKeyboardMarkup, InlineKeyboardButton, KeyboardButton, ReplyKeyboardMarkup
-from telegram.ext import MessageHandler, CommandHandler, Filters, run_async, CallbackQueryHandler
+from telegram.ext import MessageHandler, CommandHandler, Filters, CallbackQueryHandler
 import json
 from collections import OrderedDict
 
@@ -14,6 +15,23 @@ from .filters import FilterGetQuestion, FilterHelpCommand, filter_get_question, 
 # button_list =[
 #     InlineKeyboardButton()
 # ]
+
+
+def send_question(api, qid, uid, pid, st):
+
+    if qid is not None:
+        question = api.get_question(qid)
+    else:
+        question = api.get_random_question()
+    choice_data = [(dict(c="a", u=uid, cid=choice.id, qid=qid, pid=pid, st=st),
+                    choice.choice_text) for choice in question.choice_set.all()]
+    print([encode_callback_data(data) for data, ch_text in choice_data])
+    buttons_list = [InlineKeyboardButton(ch_text, callback_data=encode_callback_data(data))
+                                   for data, ch_text in choice_data]
+    random.shuffle(buttons_list)  # reorder items
+    reply_markup = InlineKeyboardMarkup(build_menu(buttons_list, n_cols=1), )
+    api.bot.send_message(uid, f"Вопрос{' №' + str(st+1) if st is not None else ''}: {question.question_text}",
+                         reply_markup=reply_markup)
 
 
 def send_buttons(api: TelegramBotApi, update):
@@ -80,6 +98,9 @@ def answer_handler(api: TelegramBotApi, update):
             if int(callback_obj["st"]) < poll.state:
                 api.bot.send_message(callback_obj['u'], f"Вы уже ответили на этот вопрос.")
                 return
+            if poll.closed:
+                api.bot.send_message(callback_obj['u'], f"Вы уже прошли этот тест.")
+                return
 
             api.bot.send_message(callback_obj['u'], f"Комментарий: {answer.comment}. Получено баллов: {answer.votes}")
             callback_obj["st"] = int(callback_obj["st"]) + 1
@@ -97,22 +118,10 @@ def answer_handler(api: TelegramBotApi, update):
 
 
 @run_async
-def get_question_handler(api: TelegramBotApi, update, uid=None, qid=None, pid=None, st=None):
-    uid = update.message.chat_id if update.message else uid
+def get_question_handler(api: TelegramBotApi, update=None, uid=None, qid=None, pid=None, st=None):
+    uid = update.message.chat_id if update and update.message else uid
     # logger.info('GET_QUESTION: Got message {} from {}'.format(update.message.text, update.message.chat_id))
-    if qid is not None:
-        question = api.get_question(qid)
-    else:
-        question = api.get_random_question()
-    choice_data = [(dict(c="a", u=uid, cid=choice.id, qid=qid, pid=pid, st=st),
-                    choice.choice_text) for choice in question.choice_set.all()]
-    print([encode_callback_data(data) for data, ch_text in choice_data])
-    buttons_list = [InlineKeyboardButton(ch_text, callback_data=encode_callback_data(data))
-                                   for data, ch_text in choice_data]
-    random.shuffle(buttons_list)  # reorder items
-    reply_markup = InlineKeyboardMarkup(build_menu(buttons_list, n_cols=1), )
-    api.bot.send_message(uid, f"Вопрос{' №' + str(st+1) if st is not None else ''}: {question.question_text}",
-                         reply_markup=reply_markup)
+    send_question(api, qid, uid, pid, st)
 
 
 @run_async
