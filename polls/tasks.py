@@ -13,7 +13,8 @@ def start_poll():
 
     api = TelegramBotApi(token=settings.DEFAULT_BOT_TOKEN)
 
-    job = group([send_poll.s(api, employee.id, employee.tguser.tg_id) for employee in Employee.objects.all()])
+    job = group([send_poll.s(api, employee.id, employee.tguser.tg_id)
+                 for employee in Employee.objects.filter(tguser__isnull=False)])
     res = job.apply_async()
 
 

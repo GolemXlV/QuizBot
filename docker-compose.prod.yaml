@@ -9,6 +9,11 @@ services:
     volumes:
       - static:/static
 
+  celery_worker:
+    environment:
+      - DJANGO_SETTINGS_MODULE=quizbot.settings.production
+      - SECRET_KEY
+
   nginx:
     container_name: nginx
     command: wait-for app:8000 -- nginx -g "daemon off;"

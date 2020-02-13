@@ -1,7 +1,7 @@
 from telegram.ext.dispatcher import run_async
 from telegram import InlineKeyboardMarkup, InlineKeyboardButton, KeyboardButton, ReplyKeyboardMarkup
 from telegram.ext import MessageHandler, CommandHandler, Filters, CallbackQueryHandler
-import json
+import re
 from collections import OrderedDict
 
 # from employees.models import Message
@@ -70,7 +70,7 @@ def contact_callback(api: TelegramBotApi, update):
         api.bot.send_message(update.message.chat_id, msg)
         return
     contact = update.effective_message.contact
-    phone = contact.phone_number
+    phone = "".join(re.findall("\d", str(contact.phone_number)))
     employee = api.get_employee_by_phone(phone)
     if not employee:
         msg = "Вас нет в базе, обратитесь в офис по таким-то контактам."
