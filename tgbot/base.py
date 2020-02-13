@@ -45,8 +45,7 @@ class TelegramBotApi:
         return user
 
     def get_employee_by_phone(self, phone_number):
-        print(phone_number)
-        employee = Employee.objects.filter(phone_number=phone_number).first()
+        employee = Employee.objects.filter(phone_number__contains=phone_number).first()
         return employee
 
     def create_user(self, tg_id, employee: Employee):
