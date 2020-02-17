@@ -30,6 +30,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['localhost']
 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 # Application definition
 
@@ -40,11 +41,32 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'constance',
+    'constance.backends.database',
     'polls.apps.PollsConfig',
     'employees.apps.EmployeesConfig',
     'django_celery_beat',
     'django_celery_results',
 ]
+
+CONSTANCE_CONFIG = {
+    'POLL_QUESTIONS_NUM': (3, _("Number of questions per poll.")),
+    'DEFAULT_BOT_MSG_AFTER_AUTHORIZATION': ("""Выберите пункт меню. Для прохождения случайного теста используйте команды: 
+    /get_question для получения случайного вопроса
+    /start_poll для того чтобы начать тест 
+    /help для помощи.""", _("Default message for bot after user complete authorization")),
+    'PHONE_NUMBER_ERROR_MSG': ("Вас нет в базе, обратитесь в офис по таким-то контактам.", _("Message on incorrect authorization")),
+    'DEFAULT_SUBJECT_FOR_EMAIL_SENDING': ("Тесты за неделю", _("Default subject for email sending")),
+    'DEFAULT_FROM_EMAIL': ("bot@quizbot.com", _("Default from email for sending.")),
+    'DEFAULT_TO_EMAIL': ("shaper2010@gmail.com,", _("Default recipient email for sending (comma separator).")),
+}
+CONSTANCE_BACKEND = 'constance.backends.database.DatabaseBackend'
+
+CONSTANCE_CONFIG_FIELDSETS = {
+    'Настройки тестов': ('POLL_QUESTIONS_NUM', ),
+    'Настройки бота': ('DEFAULT_BOT_MSG_AFTER_AUTHORIZATION', 'PHONE_NUMBER_ERROR_MSG',),
+    "Настройки рассылки": ('DEFAULT_SUBJECT_FOR_EMAIL_SENDING', 'DEFAULT_FROM_EMAIL', 'DEFAULT_TO_EMAIL'),
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

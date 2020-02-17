@@ -6,3 +6,4 @@ Celery==4.4.0
 gunicorn
 python-telegram-bot
 cached-property
+django-constance[database]==2.6.0

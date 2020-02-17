@@ -1,10 +1,13 @@
 from django.contrib import admin
+
+from employees.forms import EmployeeForm
 from .models import Employee, TGUser
 
 
 class EmployeeAdmin(admin.ModelAdmin):
     list_display = ("department", "full_name", "phone_number", "tguser")
     search_fields = ['full_name', "department", "phone_number", "tguser"]
+    form = EmployeeForm
 
 
 class TGUserAdmin(admin.ModelAdmin):

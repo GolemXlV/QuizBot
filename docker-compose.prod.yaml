@@ -8,6 +8,9 @@ services:
       - SECRET_KEY
     volumes:
       - static:/static
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
+
 
   celery_worker:
     environment:

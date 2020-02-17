@@ -1,5 +1,6 @@
 import time
 
+from polls.utils import send_report
 from .models import Question
 from employees.models import Employee
 from quizbot.celery_app import app as celery_app
@@ -27,6 +28,11 @@ def send_poll(api, emp_id, tg_id):
     question_id = api.get_next_question_id(poll)
     return send_question(api, question_id, tg_id, poll.pk, poll.state)
     # return get_question_handler(api, uid=tg_id, qid=question_id, pid=poll.pk, st=poll.state)
+
+
+@celery_app.task
+def send_email(period, ):
+    send_report(period)
 
 
 @celery_app.task

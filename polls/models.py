@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import Max
 from django.utils.translation import gettext_lazy as _
 
 # Create your models here.
@@ -44,6 +45,8 @@ class Poll(models.Model):
     closed = models.BooleanField(default=False, verbose_name=_("Is closed?"))
     votes = models.IntegerField(default=0, verbose_name=_("Votes"))
 
+    max_votes = models.IntegerField(default=0, verbose_name=_("Maximum Votes"))
+
     date_created = models.DateTimeField(auto_now_add=True, verbose_name=_("Date created"))
     date_modified = models.DateTimeField(auto_now=True, verbose_name=_("Date updated"))
     date_closed = models.DateTimeField(blank=True, null=True, verbose_name=_("Date closed"))
@@ -60,6 +63,8 @@ class Poll(models.Model):
     def save(self, **kwargs):
         if self.state is None:
             self.state = 0
+        if self.id and self.questions.count() > 0:
+            self.max_votes = sum(map(lambda x: x.max_votes, self.questions.annotate(max_votes=Max('choice__votes'))))
         if self.id and self.state >= self.questions.count():
             self.closed = True
             self.date_closed = datetime.now()

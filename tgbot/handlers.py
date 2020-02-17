@@ -9,7 +9,7 @@ from .base import TelegramBotApi
 from .utils import logger, build_menu, encode_callback_data, decode_callback_data
 import random
 from .filters import FilterGetQuestion, FilterHelpCommand, filter_get_question, filter_help_command
-
+from constance import config
 
 #
 # button_list =[
@@ -40,10 +40,7 @@ def send_buttons(api: TelegramBotApi, update):
         KeyboardButton("Помощь"),
     ]
     reply_markup = ReplyKeyboardMarkup(build_menu(buttons_list, n_cols=len(buttons_list)), resize_keyboard=True)
-    msg = """Выберите пункт меню. Для прохождения случайного теста используйте команды: 
-            /get_question для получения случайного вопроса
-            /start_poll для того чтобы начать тест 
-            /help для помощи."""
+    msg = config.DEFAULT_BOT_MSG_AFTER_AUTHORIZATION
     api.bot.send_message(update.message.chat_id, msg, reply_markup=reply_markup)
 
 
@@ -73,7 +70,7 @@ def contact_callback(api: TelegramBotApi, update):
     phone = "".join(re.findall("\d", str(contact.phone_number)))
     employee = api.get_employee_by_phone(phone)
     if not employee:
-        msg = "Вас нет в базе, обратитесь в офис по таким-то контактам."
+        msg = config.PHONE_NUMBER_ERROR_MSG
         api.bot.send_message(update.message.chat_id, msg)
     else:
         api.create_user(update.message.chat_id, employee)
@@ -137,7 +134,7 @@ def start_poll_handler(api: TelegramBotApi, update):
     if not user:
         api.bot.send_message(update.message.chat_id, "Вы не авторизовались.")
         return
-    poll = api.create_poll(user.employee_id)
+    poll = api.create_poll(user.employee_id, config.POLL_QUESTIONS_NUM)
     api.bot.send_message(update.message.chat_id, f"Тест №{poll.id} начался...")
     question_id = api.get_next_question_id(poll)
     return get_question_handler(api, update, qid=question_id, pid=poll.pk, st=poll.state)
