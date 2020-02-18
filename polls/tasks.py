@@ -24,7 +24,7 @@ def start_poll():
 def send_poll(api, emp_id, tg_id):
     from tgbot.handlers import send_question
 
-    poll = api.create_poll(emp_id)
+    poll = api.create_poll(emp_id, config.POLL_QUESTIONS_NUM)
     api.bot.send_message(tg_id, config.DEFAULT_START_POLL_MSG)
     question_id = api.get_next_question_id(poll)
     return send_question(api, question_id, tg_id, poll.pk, poll.state)
