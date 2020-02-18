@@ -51,20 +51,32 @@ INSTALLED_APPS = [
 
 CONSTANCE_CONFIG = {
     'POLL_QUESTIONS_NUM': (3, _("Number of questions per poll.")),
-    'DEFAULT_BOT_MSG_AFTER_AUTHORIZATION': ("""Выберите пункт меню. Для прохождения случайного теста используйте команды: 
-    /get_question для получения случайного вопроса
-    /start_poll для того чтобы начать тест 
-    /help для помощи.""", _("Default message for bot after user complete authorization")),
-    'PHONE_NUMBER_ERROR_MSG': ("Вас нет в базе, обратитесь в офис по таким-то контактам.", _("Message on incorrect authorization")),
+    'DEFAULT_ASK_NUMBER_MSG': ("""Здравствуйте! 
+    Нам необходимо проверить Ваш телефон по базе данных. 
+    Пожалуйста, нажмите кнопку «Запрос номера мобильного телефона» внизу экрана""", _("Default message for request contact")),
+    'DEFAULT_SUCCESS_AUTH_MSG': (f"Вы успешно авторизованы как пользователь «%(name)s» из подразделения «%(department)s»",
+                                     _("Default message for user after successful authorization")),
+    'DEFAULT_START_POLL_MSG': (f"Здравствуйте! Начнём сегодняшнее тестирование", _("Default message for start poll")),
+    'DEFAULT_AFTER_AUTH_MSG': ("""Итак, начиная с настоящего момента, чат-бот «Сержант» регулярно (в дни недели, указанные руководителем) 
+    будет задавать вопросы по Вашей технологической или должностной инструкции. Для ответа нажимайте соответствующую кнопку внизу экрана Telegram. 
+    Баллы за правильные ответы (отдельно за каждый день) суммируются. Итоговый отчёт в конце недели придёт на емаил руководителю. 
+    Для повторного получения данной информации передайте боту команду /help 
+    Тестирование прекратится, когда руководитель заблокирует ваш аккаунт в панели администратора""", _("Default message for bot after user complete authorization")),
+    'DEFAULT_ANSWER_MSG': ("%(comment)s Начислено баллов за данный вопрос: %(votes)s", _("Message on answer the question")),
+    'DEFAULT_POLL_END_MSG': ("""Поздравляю! Вы завершили тест на сегодня и набрали баллов: %(votes)s из %(max_votes)s максимально возможных.
+    Хорошего дня!""", _("Message on poll ending")),
+    'DEFAULT_PHONE_NUMBER_ERROR_MSG': ("Вас нет в базе, обратитесь в офис по таким-то контактам.", _("Message on incorrect authorization")),
     'DEFAULT_SUBJECT_FOR_EMAIL_SENDING': ("Тесты за неделю", _("Default subject for email sending")),
-    'DEFAULT_FROM_EMAIL': ("bot@quizbot.com", _("Default from email for sending.")),
-    'DEFAULT_TO_EMAIL': ("shaper2010@gmail.com,", _("Default recipient email for sending (comma separator).")),
+    'DEFAULT_FROM_EMAIL': ("bot@288077-yurdoos.tmweb.ru", _("Default from email for sending.")),
+    'DEFAULT_TO_EMAIL': ("medvedev@zvezda-sb.ru,", _("Default recipient email for sending (comma separator).")),
 }
 CONSTANCE_BACKEND = 'constance.backends.database.DatabaseBackend'
 
 CONSTANCE_CONFIG_FIELDSETS = {
     'Настройки тестов': ('POLL_QUESTIONS_NUM', ),
-    'Настройки бота': ('DEFAULT_BOT_MSG_AFTER_AUTHORIZATION', 'PHONE_NUMBER_ERROR_MSG',),
+    'Настройки бота': ('DEFAULT_ASK_NUMBER_MSG', 'DEFAULT_SUCCESS_AUTH_MSG', 'DEFAULT_START_POLL_MSG',
+                       'DEFAULT_AFTER_AUTH_MSG', 'DEFAULT_ANSWER_MSG', 'DEFAULT_POLL_END_MSG',
+                       'DEFAULT_PHONE_NUMBER_ERROR_MSG',),
     "Настройки рассылки": ('DEFAULT_SUBJECT_FOR_EMAIL_SENDING', 'DEFAULT_FROM_EMAIL', 'DEFAULT_TO_EMAIL'),
 }
 
@@ -72,6 +84,7 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.locale.LocaleMiddleware',
+    'quizbot.middleware.LanguageMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -84,7 +97,7 @@ ROOT_URLCONF = 'quizbot.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, '../../templates')]
+        'DIRS': [os.path.join(BASE_DIR, '../templates')]
         ,
         'APP_DIRS': True,
         'OPTIONS': {
@@ -150,6 +163,7 @@ LANGUAGES = [
 ]
 
 LOCALE_PATHS = (
+    os.path.join(BASE_DIR, '../locale'),
     os.path.join(BASE_DIR, 'locale'),
 )
 
@@ -166,7 +180,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = '/static'
+STATIC_ROOT = os.path.join(BASE_DIR, "..", "static")
 
 # Celery config
 CELERY_BROKER_URL= 'pyamqp://rabbitmq:5672'

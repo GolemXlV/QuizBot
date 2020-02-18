@@ -26,7 +26,8 @@ class Employee(models.Model):
     full_name = models.CharField(max_length=300, verbose_name=_("Full name"))
     department = models.CharField(max_length=100, verbose_name=_("Department"))
     days_for_poll = ArrayField(
-        models.CharField(choices=days_of_week, max_length=1, blank=True, default=DEFAULT_CHOICE),
+        models.CharField(choices=days_of_week, max_length=1, blank=True, default=DEFAULT_CHOICE,
+                         verbose_name=_("Days for poll")),
         verbose_name=_("Days for poll")
     )
 

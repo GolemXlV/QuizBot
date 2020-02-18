@@ -16,6 +16,17 @@ services:
     environment:
       - DJANGO_SETTINGS_MODULE=quizbot.settings.production
       - SECRET_KEY
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
+
+  tg_bot:
+    environment:
+      - DJANGO_SETTINGS_MODULE=quizbot.settings.production
+      - SECRET_KEY
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
 
   nginx:
     container_name: nginx

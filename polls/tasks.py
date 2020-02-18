@@ -5,6 +5,7 @@ from .models import Question
 from employees.models import Employee
 from quizbot.celery_app import app as celery_app
 from celery import group
+from constance import config
 
 
 @celery_app.task
@@ -24,7 +25,7 @@ def send_poll(api, emp_id, tg_id):
     from tgbot.handlers import send_question
 
     poll = api.create_poll(emp_id)
-    api.bot.send_message(tg_id, f"Тест №{poll.id} начался...")
+    api.bot.send_message(tg_id, config.DEFAULT_START_POLL_MSG)
     question_id = api.get_next_question_id(poll)
     return send_question(api, question_id, tg_id, poll.pk, poll.state)
     # return get_question_handler(api, uid=tg_id, qid=question_id, pid=poll.pk, st=poll.state)

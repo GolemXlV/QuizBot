@@ -1,0 +1,79 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-02-18 03:49+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n"
+"%100>=11 && n%100<=14)? 2 : 3);\n"
+
+#: quizbot/settings/settings.py:53
+msgid "Number of questions per poll."
+msgstr "Кол-во вопросов для теста"
+
+#: quizbot/settings/settings.py:56
+#, fuzzy
+#| msgid "Default message for bot after user complete authorization"
+msgid "Default message for request contact"
+msgstr "Сообщение бота по умолчанию после успешной авторизации"
+
+#: quizbot/settings/settings.py:58
+#, fuzzy
+#| msgid "Default message for bot after user complete authorization"
+msgid "Default message for user after successful authorization"
+msgstr "Сообщение бота по умолчанию после успешной авторизации"
+
+#: quizbot/settings/settings.py:59
+msgid "Default message for start poll"
+msgstr "Сообщение по умолчанию о начале теста"
+
+#: quizbot/settings/settings.py:64
+msgid "Default message for bot after user complete authorization"
+msgstr "Сообщение бота по умолчанию после успешной авторизации"
+
+#: quizbot/settings/settings.py:65
+#, fuzzy
+#| msgid "Message on incorrect authorization"
+msgid "Message on answer the question"
+msgstr "Сообщение при некорректной авторизации"
+
+#: quizbot/settings/settings.py:67
+msgid "Message on poll ending"
+msgstr "Сообщение по умолчанию о конце теста"
+
+#: quizbot/settings/settings.py:68
+msgid "Message on incorrect authorization"
+msgstr "Сообщение при некорректной авторизации"
+
+#: quizbot/settings/settings.py:69
+msgid "Default subject for email sending"
+msgstr "Тема письма для рассылки отчетов по умолчанию"
+
+#: quizbot/settings/settings.py:70
+msgid "Default from email for sending."
+msgstr "Отправитель письма по умолчанию"
+
+#: quizbot/settings/settings.py:71
+msgid "Default recipient email for sending (comma separator)."
+msgstr "Получатели письма для рассылки (через запятую)"
+
+#: quizbot/settings/settings.py:161
+msgid "Russian"
+msgstr "Русский"
+
+#: quizbot/settings/settings.py:162
+msgid "English"
+msgstr "Английский"

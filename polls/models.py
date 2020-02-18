@@ -11,12 +11,12 @@ from datetime import datetime
 
 class Question(models.Model):
     question_text = models.CharField(max_length=500, verbose_name=_("Question text"))
-    pub_date = models.DateTimeField(verbose_name=_('Date added'))
+    pub_date = models.DateTimeField(verbose_name=_('Date added'), auto_now_add=True)
 
     objects = QuestionManager()
 
     def __str__(self):
-        return f"Вопрос №{self.pk}"
+        return f"Вопрос: {self.question_text}"
 
     class Meta:
         verbose_name = _("Question")
@@ -30,7 +30,7 @@ class Choice(models.Model):
     votes = models.IntegerField(default=0, verbose_name=_("Vote"))
 
     def __str__(self):
-        return f"Ответ №{self.pk}"
+        return f"Ответ: {self.choice_text}"
 
     class Meta:
         verbose_name = _("Choice")

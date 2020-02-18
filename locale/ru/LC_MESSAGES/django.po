@@ -8,9 +8,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-02-05 15:28+0300\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2020-02-18 03:49+0000\n"
+"PO-Revision-Date: 2020-02-18 00:06+0230\n"
+"Last-Translator: b'  <admin@test.ru>'\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
@@ -19,12 +19,13 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n"
 "%100>=11 && n%100<=14)? 2 : 3);\n"
+"X-Translated-Using: django-rosetta 0.9.3\n"
 
-#: .\employees\apps.py:7
+#: employees/apps.py:7
 msgid "Employee management"
 msgstr "Управление персоналом"
 
-#: .\employees\messages.py:3
+#: employees/messages.py:3
 msgid ""
 "Phone number must be entered in the format: '+999999999'. Up to 15 digits "
 "allowed."
@@ -32,79 +33,225 @@ msgstr ""
 "Номер телефона должен быть введён в формате +99999999999. До 15 символов "
 "разрешено."
 
-#: .\employees\models.py:13
-msgid "User"
-msgstr "Пользователь"
+#: employees/models.py:14
+msgid "Monday"
+msgstr "Понедельник"
 
-#: .\employees\models.py:15
+#: employees/models.py:15
+msgid "Tuesday"
+msgstr "Вторник"
+
+#: employees/models.py:16
+msgid "Wednesday"
+msgstr "Среда"
+
+#: employees/models.py:17
+msgid "Thursday"
+msgstr "Четверг"
+
+#: employees/models.py:18
+msgid "Friday"
+msgstr "Пятница"
+
+#: employees/models.py:19
+msgid "Saturday"
+msgstr "Суббота"
+
+#: employees/models.py:20
+msgid "Sunday"
+msgstr "Воскресенье"
+
+#: employees/models.py:25
 msgid "Phone number"
 msgstr "Номер телефона"
 
-#: .\employees\models.py:16
+#: employees/models.py:26
 msgid "Full name"
 msgstr "ФИО"
 
-#: .\employees\models.py:17
+#: employees/models.py:27
 msgid "Department"
-msgstr "Департамент"
+msgstr "Отдел"
 
-#: .\employees\models.py:20
+#: employees/models.py:30 employees/models.py:31
+msgid "Days for poll"
+msgstr "Дни для прохождения тестов"
+
+#: employees/models.py:38 polls/models.py:42
 msgid "Employee"
 msgstr "Сотрудник"
 
-#: .\employees\models.py:21
+#: employees/models.py:39
 msgid "Employees"
 msgstr "Сотрудники"
 
-#: .\polls\apps.py:7
-msgid "Poll"
-msgstr "Викторина"
+#: employees/models.py:45
+msgid "Telegram ID"
+msgstr "ID Telegram"
 
-#: .\polls\models.py:9
+#: employees/models.py:46
+msgid "Telegram user name"
+msgstr "Имя пользователя Telegram"
+
+#: employees/models.py:47
+msgid "Telegram first name"
+msgstr "Имя Telegram"
+
+#: employees/models.py:48
+msgid "Telegram last name"
+msgstr "Фамилия Telegram"
+
+#: employees/models.py:54
+msgid "Telegram user"
+msgstr "Пользователь Telegram"
+
+#: employees/models.py:55
+msgid "Telegram users"
+msgstr "Пользователи Telegram"
+
+#: polls/apps.py:7 polls/models.py:60
+msgid "Poll"
+msgstr "Тест"
+
+#: polls/models.py:13
 msgid "Question text"
 msgstr "Текст вопроса"
 
-#: .\polls\models.py:10
+#: polls/models.py:14
 msgid "Date added"
 msgstr "Дата добавления"
 
-#: .\polls\models.py:13 .\polls\models.py:18
+#: polls/models.py:22 polls/models.py:27
 msgid "Question"
 msgstr "Вопрос"
 
-#: .\polls\models.py:14
+#: polls/models.py:23 polls/models.py:43
 msgid "Questions"
 msgstr "Вопросы"
 
-#: .\polls\models.py:19
+#: polls/models.py:28
 msgid "Answer text"
 msgstr "Текст ответа"
 
-#: .\polls\models.py:20
+#: polls/models.py:29
 msgid "Comment"
 msgstr "Комментарий к ответу"
 
-#: .\polls\models.py:21
+#: polls/models.py:30
 msgid "Vote"
 msgstr "Кол-во баллов за ответ"
 
-#: .\polls\models.py:24
+#: polls/models.py:36
 msgid "Choice"
 msgstr "Вариант ответа"
 
-#: .\polls\models.py:25
-#, fuzzy
-#| msgid "Choice"
+#: polls/models.py:37
 msgid "Choices"
 msgstr "Варианты ответа"
 
-#: .\quizbot\settings\settings.py:126
-msgid "Russian"
-msgstr "Русский"
+#: polls/models.py:44
+msgid "State num"
+msgstr "Статус состояния"
 
-#: .\quizbot\settings\settings.py:127
-msgid "English"
-msgstr "Английский"
+#: polls/models.py:45
+msgid "Is closed?"
+msgstr "Закончен?"
+
+#: polls/models.py:46
+msgid "Votes"
+msgstr "Кол-во баллов за ответ"
+
+#: polls/models.py:48
+msgid "Maximum Votes"
+msgstr "Максимальное кол-во баллов"
+
+#: polls/models.py:50
+msgid "Date created"
+msgstr "Дата добавления"
+
+#: polls/models.py:51
+msgid "Date updated"
+msgstr "Дата обновления"
+
+#: polls/models.py:52
+msgid "Date closed"
+msgstr "Дата закрытия"
+
+#: polls/models.py:61
+msgid "Polls"
+msgstr "Тесты"
+
+#~ msgid "Days for Poll"
+#~ msgstr "Дни для прохождения тестов"
+
+#~| msgid "Periodic Tasks"
+#~ msgid "Periodic Tasks"
+#~ msgstr "Периодические Задачи"
+
+#~| msgid "Constance"
+#~ msgid "Constance"
+#~ msgstr "Настройки приложения"
+
+#~| msgid "Celery Results"
+#~ msgid "Celery Results"
+#~ msgstr "Результаты Celery"
+
+#~| msgid "Task Results"
+#~ msgid "Task Results"
+#~ msgstr "Результаты Задач"
+
+#~| msgid "Task results"
+#~ msgid "Task results"
+#~ msgstr "Результаты задач"
+
+#~| msgid "Task Result"
+#~ msgid "Task Result"
+#~ msgstr "Результат Задачи"
+
+#~| msgid "Task result"
+#~ msgid "Task result"
+#~ msgstr "Результат Задачи"
+
+#~| msgid "task result"
+#~ msgid "task result"
+#~ msgstr "результат задачи"
+
+#~| msgid "Task ID"
+#~ msgid "Task ID"
+#~ msgstr "ID задачи"
+
+#~| msgid "Task Name"
+#~ msgid "Task Name"
+#~ msgstr "Название задачи"
+
+#~| msgid "Completed DateTime"
+#~ msgid "Completed DateTime"
+#~ msgstr "Время завершения"
+
+#~| msgid "Worker"
+#~ msgid "Worker"
+#~ msgstr "Рабочий"
+
+#~| msgid "Task State"
+#~ msgid "Task State"
+#~ msgstr "Состояние задачи"
+
+#~| msgid "Result Content Type"
+#~ msgid "Result Content Type"
+#~ msgstr "Тип возвращаемых данных"
+
+#~| msgid "Result Encoding"
+#~ msgid "Result Encoding"
+#~ msgstr "Кодировка результата"
+
+#~ msgid "User"
+#~ msgstr "Пользователь"
+
+#~ msgid "Russian"
+#~ msgstr "Русский"
+
+#~ msgid "English"
+#~ msgstr "Английский"
 
 #~ msgid "Users"
 #~ msgstr "Пользователи"

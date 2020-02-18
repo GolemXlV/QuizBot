@@ -1,6 +1,5 @@
 from .settings import *
 
-
 def env(name, default=None, type=None):
     value = os.environ.get(name, default)
     return type(value) if type is not None else value

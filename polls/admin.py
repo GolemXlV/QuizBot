@@ -3,24 +3,25 @@ from .models import Question, Choice, Poll
 
 
 class PollAdmin(admin.ModelAdmin):
+    verbose_name = "Тест"
+    verbose_name_plural = "Тест"
     list_display = ("employee", "state", "closed", "votes", "date_created", "date_modified", "date_closed")
     list_filter = ("state", "closed", "date_created", "date_modified", "date_closed")
     search_fields = ['employee', "votes"]
 
 
+class ChoiceInline(admin.StackedInline):
+    model = Choice
+    extra = 2
+
+
 class QuestionAdmin(admin.ModelAdmin):
     list_display = ("question_text", "pub_date")
     list_filter = ("pub_date",)
-    search_fields = ['question_text']
-
-
-class ChoiceAdmin(admin.ModelAdmin):
-    list_display = ("question", "choice_text", "comment", "votes")
-    list_filter = ("votes",)
-    search_fields = ['choice_text', "comment"]
+    search_fields = ['question_text', 'choice__choice_text']
+    inlines = [ChoiceInline]
 
 
 # Register your models here.
 admin.site.register(Poll, PollAdmin)
 admin.site.register(Question, QuestionAdmin)
-admin.site.register(Choice, ChoiceAdmin)
