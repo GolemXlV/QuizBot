@@ -6,6 +6,10 @@ services:
     environment:
       - DJANGO_SETTINGS_MODULE=quizbot.settings.production
       - SECRET_KEY
+      - EMAIL_HOST
+      - EMAIL_PORT
+      - EMAIL_HOST_USER
+      - EMAIL_HOST_PASSWORD
     volumes:
       - static:/static
       - /etc/localtime:/etc/localtime:ro
@@ -16,6 +20,10 @@ services:
     environment:
       - DJANGO_SETTINGS_MODULE=quizbot.settings.production
       - SECRET_KEY
+      - EMAIL_HOST
+      - EMAIL_PORT
+      - EMAIL_HOST_USER
+      - EMAIL_HOST_PASSWORD
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - /etc/timezone:/etc/timezone:ro

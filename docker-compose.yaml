@@ -37,9 +37,6 @@ services:
       - rabbitmq
     expose:
       - "8000"
-    environment:
-      - EMAIL_PORT=1025
-      - EMAIL_HOST=smtp
     hostname: app
     image: app-image
     networks:
@@ -102,20 +99,11 @@ services:
     ports:
       - 8443:8443
 
-  smtp:
-    container_name: smtp
-    hostname: smtp
-    image: mailhog/mailhog:v1.0.0
-    ports:
-      - 8025:8025
-      - 1025:1025
-    networks:
-      - main
-    restart: always
-
 
 networks:
   main:
+    external:
+      name: quizbot_network
 
 volumes:
   postgresql-data:

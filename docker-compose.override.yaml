@@ -53,3 +53,14 @@ services:
       - tors=25
     networks:
       - main
+
+  smtp:
+    container_name: smtp
+    hostname: smtp
+    image: mailhog/mailhog:v1.0.0
+    ports:
+      - 8025:8025
+      - 1025:1025
+    networks:
+      - main
+    restart: always
