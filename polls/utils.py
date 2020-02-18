@@ -26,17 +26,17 @@ def send_report(period=7):
         processed_data[f"{full_name},{phone_number}"].votes.append(votes)
         processed_data[f"{full_name},{phone_number}"].max_votes.append(max_votes)
 
-    stat_list = ["Сотрудник,Номер телефона,Понедельник,Вторник,Среда,Четверг,Пятница,Суббота,Воскресенье"]
+    headers = "Сотрудник|Номер телефона|Понедельник|Вторник|Среда|Четверг|Пятница|Суббота|Воскресенье".split('|')
+    stat_list = [",".join(headers)]
     for user, entry in processed_data.items():
         user_entry = [f"{user}"]
         for i in range(period):
             try:
                 day = entry.days[i]
             except:
-                user_entry.append("Тест не назначался")
+                user_entry.append("-")
             else:
-                user_entry.append(f"{entry.votes[i]}/{entry.max_votes[i]}" if entry.votes[i] is not None
-                                  else "Не тестировался")
+                user_entry.append(f"{entry.votes[i]}/{entry.max_votes[i]}" if entry.votes[i] is not None else "x")
         stat_list.append(",".join(user_entry))
 
     send_mail(config.DEFAULT_SUBJECT_FOR_EMAIL_SENDING, "\n".join(stat_list),
