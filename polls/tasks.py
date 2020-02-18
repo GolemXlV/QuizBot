@@ -6,6 +6,7 @@ from employees.models import Employee
 from quizbot.celery_app import app as celery_app
 from celery import group
 from constance import config
+from datetime import datetime
 
 
 @celery_app.task
@@ -15,8 +16,10 @@ def start_poll():
 
     api = TelegramBotApi(token=settings.DEFAULT_BOT_TOKEN)
 
-    job = group([send_poll.s(api, employee.id, employee.tguser.tg_id)
-                 for employee in Employee.objects.filter(tguser__isnull=False)])
+    day = datetime.now().weekday() + 1
+
+    job = group([send_poll.s(api, employee.id, employee.tguser.tg_id) for employee
+                 in Employee.objects.filter(tguser__isnull=False, days_for_poll__contains=[day])])
     res = job.apply_async()
 
 
