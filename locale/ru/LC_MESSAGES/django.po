@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-02-18 03:49+0000\n"
+"POT-Creation-Date: 2020-02-18 06:31+0000\n"
 "PO-Revision-Date: 2020-02-18 00:06+0230\n"
 "Last-Translator: b'  <admin@test.ru>'\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -24,6 +24,10 @@ msgstr ""
 #: employees/apps.py:7
 msgid "Employee management"
 msgstr "Управление персоналом"
+
+#: employees/forms.py:9 employees/models.py:30 employees/models.py:31
+msgid "Days for poll"
+msgstr "Дни для прохождения тестов"
 
 #: employees/messages.py:3
 msgid ""
@@ -72,10 +76,6 @@ msgstr "ФИО"
 #: employees/models.py:27
 msgid "Department"
 msgstr "Отдел"
-
-#: employees/models.py:30 employees/models.py:31
-msgid "Days for poll"
-msgstr "Дни для прохождения тестов"
 
 #: employees/models.py:38 polls/models.py:42
 msgid "Employee"
