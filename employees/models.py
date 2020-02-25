@@ -5,11 +5,10 @@ from django.db import models
 from django.contrib.postgres.fields import ArrayField
 from .messages import PHONE_VALIDATION_MSG
 
-# Create your models here.
 
-
-class Employee(models.Model):
+class DailyTaskModel(models.Model):
     DEFAULT_CHOICE = ['1', '2', '3', '4', '5', '6', '7']
+
     days_of_week = (
         ('1', _("Monday")),
         ('2', _("Tuesday")),
@@ -20,19 +19,40 @@ class Employee(models.Model):
         ('7', _("Sunday")),
     )
 
-    phone_regex = RegexValidator(regex=r'^\+?1?\d{9,15}$', message=PHONE_VALIDATION_MSG)
-    phone_number = models.CharField(validators=[phone_regex], max_length=17,
-                                    blank=False, verbose_name=_("Phone number"))
-    full_name = models.CharField(max_length=300, verbose_name=_("Full name"))
-    department = models.CharField(max_length=100, verbose_name=_("Department"))
     days_for_poll = ArrayField(
         models.CharField(choices=days_of_week, max_length=1, blank=True, default=DEFAULT_CHOICE,
                          verbose_name=_("Days for poll")),
         verbose_name=_("Days for poll")
     )
 
+    class Meta:
+        abstract = True
+
+
+# Create your models here.
+class Department(DailyTaskModel):
+    name = models.CharField(max_length=100, verbose_name=_("Name of Department"))
+
     def __str__(self):
-        return f"Сотрудник №{self.pk}"
+        return f"{self.name}"
+
+    class Meta:
+        verbose_name = _("Department")
+        verbose_name_plural = _("Departments")
+
+
+class Employee(DailyTaskModel):
+
+    phone_regex = RegexValidator(regex=r'^\+?1?\d{9,15}$', message=PHONE_VALIDATION_MSG)
+    phone_number = models.CharField(validators=[phone_regex], max_length=17,
+                                    blank=False, verbose_name=_("Phone number"),
+                                    help_text=_("Enter the phone number in format +7999999999"))
+    full_name = models.CharField(max_length=300, verbose_name=_("Full name"))
+    department = models.ForeignKey(Department, on_delete=models.SET_NULL, null=True, blank=False,
+                                   verbose_name=_("Department"))
+
+    def __str__(self):
+        return f"Сотрудник: {self.full_name}"
 
     class Meta:
         verbose_name = _("Employee")
