@@ -5,13 +5,15 @@ from django.utils.translation import gettext_lazy as _
 # Create your models here.
 from django.db import models
 from .managers import QuestionManager, PollManager
-from employees.models import Employee
+from employees.models import Employee, Department
 from datetime import datetime
 
 
 class Question(models.Model):
-    question_text = models.CharField(max_length=500, verbose_name=_("Question text"))
+    question_text = models.TextField(max_length=500, verbose_name=_("Question text"))
     pub_date = models.DateTimeField(verbose_name=_('Date added'), auto_now_add=True)
+    department = models.ForeignKey(Department, on_delete=models.SET_NULL, null=True, blank=False,
+                                   verbose_name=_("Department"))
 
     objects = QuestionManager()
 
@@ -25,7 +27,7 @@ class Question(models.Model):
 
 class Choice(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE, verbose_name=_("Question"))
-    choice_text = models.CharField(max_length=200, verbose_name=_("Answer text"))
+    choice_text = models.TextField(max_length=500, verbose_name=_("Answer text"))
     comment = models.CharField(max_length=200, verbose_name=_("Comment"))
     votes = models.IntegerField(default=0, verbose_name=_("Vote"))
 

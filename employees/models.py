@@ -4,10 +4,11 @@ from django.utils.translation import gettext_lazy as _
 from django.db import models
 from django.contrib.postgres.fields import ArrayField
 from .messages import PHONE_VALIDATION_MSG
+from django.utils import timezone
 
 
 class DailyTaskModel(models.Model):
-    DEFAULT_CHOICE = ['1', '2', '3', '4', '5', '6', '7']
+    DEFAULT_CHOICE = ['1', '2', '3', '4', '5', ]
 
     days_of_week = (
         ('1', _("Monday")),
@@ -24,6 +25,7 @@ class DailyTaskModel(models.Model):
                          verbose_name=_("Days for poll")),
         verbose_name=_("Days for poll")
     )
+    time_for_poll = models.TimeField(default=timezone.now(), verbose_name=_("Time for poll"))
 
     class Meta:
         abstract = True

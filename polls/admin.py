@@ -16,9 +16,9 @@ class ChoiceInline(admin.StackedInline):
 
 
 class QuestionAdmin(admin.ModelAdmin):
-    list_display = ("question_text", "pub_date")
-    list_filter = ("pub_date",)
-    search_fields = ['question_text', 'choice__choice_text']
+    list_display = ("department", "question_text", "pub_date")
+    list_filter = ("department", "pub_date",)
+    search_fields = ['question_text', 'choice__choice_text', "department"]
     inlines = [ChoiceInline]
 
 
