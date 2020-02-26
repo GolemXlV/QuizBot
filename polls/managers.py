@@ -4,11 +4,11 @@ import random
 
 class QuestionManager(Manager):
 
-    def get_questions(self, question_id=None, num=3, flat=False):
+    def get_questions(self, question_id=None, num=3, dept_id=None, flat=False):
         """Select random questions
         :returns List<Question>"""
         if question_id is not None:
-            return self.filter(pk=question_id).first()
+            return self.filter(pk=question_id, department_id=dept_id).first()
 
         ids = list(self.values_list('id', flat=True))
         rand_ids = random.sample(ids, num)
