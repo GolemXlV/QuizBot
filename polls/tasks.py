@@ -17,23 +17,24 @@ def start_poll(delta_period=5):
 
     api = TelegramBotApi(token=settings.DEFAULT_BOT_TOKEN)
 
-    now = timezone.localtime(timezone.now())
+    now = timezone.localtime(timezone.now()).replace(second=0, microsecond=0)
     day = now.weekday() + 1
 
     start_time = now - timedelta(minutes=delta_period)
-    end_time = now + timedelta(minutes=delta_period)
+    end_time = now
 
-    job = group([send_poll.s(api, employee.id, employee.tguser.tg_id) for employee
-                 in Employee.objects.filter(tguser__isnull=False, department__days_for_poll__contains=[day],
+    job = group([send_poll.s(api, employee.id, employee.tguser.tg_id, employee.department_id) for employee
+                 in Employee.objects.filter(tguser__isnull=False, department__isnull=False,
+                                            department__days_for_poll__contains=[day],
                                             department__time_for_poll__range=[start_time.time(), end_time.time()])])
     res = job.apply_async()
 
 
 @celery_app.task
-def send_poll(api, emp_id, tg_id):
+def send_poll(api, emp_id, tg_id, dept_id):
     from tgbot.handlers import send_question
 
-    poll = api.create_poll(emp_id, config.POLL_QUESTIONS_NUM)
+    poll = api.create_poll(emp_id, config.POLL_QUESTIONS_NUM, dept_id)
     api.bot.send_message(tg_id, config.DEFAULT_START_POLL_MSG)
     question_id = api.get_next_question_id(poll)
     return send_question(api, question_id, tg_id, poll.pk, poll.state)

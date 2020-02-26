@@ -32,7 +32,7 @@ def send_question(api, qid, uid, pid, st):
                                    for data, ch_text in choice_data]
     # random.shuffle(buttons_list)  # reorder items
     reply_markup = InlineKeyboardMarkup(build_menu(buttons_list, n_cols=2), )
-    api.bot.send_message(uid, f"ВОПРОС: {st+1}/{config.POLL_QUESTIONS_NUM}:  {question.question_text}")
+    api.bot.send_message(uid, f"ВОПРОС {st+1}/{config.POLL_QUESTIONS_NUM}:  {question.question_text}")
 
     for (i, choice), has_more in lookahead(enumerate(choices, 1)):
         if has_more:

@@ -67,8 +67,8 @@ class TelegramBotApi:
         answer = Choice.objects.filter(pk=answer_id).first()
         return answer
 
-    def create_poll(self, employee_id, questions_num=3) -> Poll:
-        q_ids = Question.objects.get_questions(num=questions_num, flat=True)
+    def create_poll(self, employee_id, questions_num=3, dept_id=None) -> Poll:
+        q_ids = Question.objects.get_questions(num=questions_num, dept_id=dept_id, flat=True)
         poll = Poll.objects.create_poll(employee_id=employee_id, questions_ids=q_ids)
         return poll
 
