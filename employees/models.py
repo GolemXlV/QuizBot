@@ -4,6 +4,7 @@ from django.utils.translation import gettext_lazy as _
 from django.db import models
 from django.contrib.postgres.fields import ArrayField
 from .messages import PHONE_VALIDATION_MSG
+import datetime
 
 
 class DailyTaskModel(models.Model):
@@ -24,7 +25,7 @@ class DailyTaskModel(models.Model):
                          verbose_name=_("Days for poll")),
         verbose_name=_("Days for poll")
     )
-    time_for_poll = models.TimeField(auto_now=True, verbose_name=_("Time for poll"))
+    time_for_poll = models.TimeField(default=datetime.time(12, 00), verbose_name=_("Time for poll"))
 
     class Meta:
         abstract = True
