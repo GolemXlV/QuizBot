@@ -19,7 +19,7 @@ def start_poll():
     day = datetime.now().weekday() + 1
 
     job = group([send_poll.s(api, employee.id, employee.tguser.tg_id) for employee
-                 in Employee.objects.filter(tguser__isnull=False, days_for_poll__contains=[day])])
+                 in Employee.objects.filter(tguser__isnull=False, department__days_for_poll__contains=[day])])
     res = job.apply_async()
 
 
