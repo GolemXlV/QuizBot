@@ -6,7 +6,7 @@ from collections import OrderedDict
 
 # from employees.models import Message
 from .base import TelegramBotApi
-from .utils import logger, build_menu, encode_callback_data, decode_callback_data
+from .utils import logger, build_menu, encode_callback_data, decode_callback_data, lookahead
 import random
 from .filters import FilterGetQuestion, FilterHelpCommand, filter_get_question, filter_help_command
 from constance import config
@@ -32,9 +32,13 @@ def send_question(api, qid, uid, pid, st):
                                    for data, ch_text in choice_data]
     # random.shuffle(buttons_list)  # reorder items
     reply_markup = InlineKeyboardMarkup(build_menu(buttons_list, n_cols=2), )
-    msg = f"Вопрос: «{question.question_text}»\n"
-    msg += "\n".join([f"Вариант {i}: {choice[1]}" for i, choice in enumerate(choices, 1)])
-    api.bot.send_message(uid, msg, reply_markup=reply_markup)
+    api.bot.send_message(uid, f"ВОПРОС: {st+1}/{config.POLL_QUESTIONS_NUM}:  {question.question_text}")
+
+    for (i, choice), has_more in lookahead(enumerate(choices, 1)):
+        if has_more:
+            api.bot.send_message(uid, f"ВАРИАНТ {i}:  {choice[1]}")
+        else:
+            api.bot.send_message(uid, f"ВАРИАНТ {i}:  {choice[1]}", reply_markup=reply_markup)
 
 
 def send_buttons(api: TelegramBotApi, update):

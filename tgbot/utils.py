@@ -26,3 +26,12 @@ def decode_callback_data(encoded_obj: str, sep1=",", sep2=":"):
     encoded_obj = filter(lambda x: len(x) > 1, encoded_obj)
     encoded_obj = list(encoded_obj)
     return dict(encoded_obj)
+
+
+def lookahead(iterable):
+    it = iter(iterable)
+    last = next(it)
+    for val in it:
+        yield last, True
+        last = val
+    yield last, False
