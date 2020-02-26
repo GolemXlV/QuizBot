@@ -75,7 +75,7 @@ msgstr "Название отдела"
 
 #: employees/models.py:39 employees/models.py:41
 msgid "Emails for sending"
-msgstr ""
+msgstr "Email-адреса для рассылки"
 
 #: employees/models.py:40
 msgid "Enter one or multiple email addresses (comma separator)"
