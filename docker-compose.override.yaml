@@ -6,6 +6,8 @@ services:
     command: sh -c "./wait-for postgres:5432 && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
     environment:
       - BOT_TOKEN
+      - EMAIL_HOST=smtp
+      - EMAIL_PORT=1025
     ports:
       - "8000:8000"
     volumes:

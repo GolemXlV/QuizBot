@@ -68,7 +68,7 @@ CONSTANCE_CONFIG = {
     'DEFAULT_PHONE_NUMBER_ERROR_MSG': ("Вас нет в базе, обратитесь в офис по таким-то контактам.", _("Message on incorrect authorization")),
     'DEFAULT_SUBJECT_FOR_EMAIL_SENDING': ("Тесты за неделю", _("Default subject for email sending")),
     'DEFAULT_FROM_EMAIL': ("bot@288077-yurdoos.tmweb.ru", _("Default from email for sending.")),
-    'DEFAULT_TO_EMAIL': ("medvedev@zvezda-sb.ru,", _("Default recipient email for sending (comma separator).")),
+    'DEFAULT_TO_EMAIL': ("medvedev@zvezda-sb.ru", _("Default recipient email for sending (comma separator).")),
 }
 CONSTANCE_BACKEND = 'constance.backends.database.DatabaseBackend'
 

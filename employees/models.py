@@ -1,3 +1,4 @@
+from constance import config
 from django.contrib.auth.models import User
 from django.core.validators import RegexValidator
 from django.utils.translation import gettext_lazy as _
@@ -25,7 +26,7 @@ class DailyTaskModel(models.Model):
                          verbose_name=_("Days for poll")),
         verbose_name=_("Days for poll")
     )
-    time_for_poll = models.TimeField(default=timezone.now(), verbose_name=_("Time for poll"))
+    time_for_poll = models.TimeField(default=timezone.localtime(timezone.now()), verbose_name=_("Time for poll"))
 
     class Meta:
         abstract = True
@@ -34,6 +35,11 @@ class DailyTaskModel(models.Model):
 # Create your models here.
 class Department(DailyTaskModel):
     name = models.CharField(max_length=100, verbose_name=_("Name of Department"))
+    email = ArrayField(
+        models.EmailField(default=config.DEFAULT_TO_EMAIL, verbose_name=_("Emails for sending")),
+        help_text=_("Enter one or multiple email addresses (comma separator)"),
+        verbose_name=_("Emails for sending")
+    )
 
     def __str__(self):
         return f"{self.name}"
@@ -43,7 +49,7 @@ class Department(DailyTaskModel):
         verbose_name_plural = _("Departments")
 
 
-class Employee(DailyTaskModel):
+class Employee(models.Model):
 
     phone_regex = RegexValidator(regex=r'^\+?1?\d{9,15}$', message=PHONE_VALIDATION_MSG)
     phone_number = models.CharField(validators=[phone_regex], max_length=17,

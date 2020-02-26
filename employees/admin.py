@@ -1,12 +1,12 @@
 from django.contrib import admin
 
-from employees.forms import EmployeeForm, DepartmentForm
+from employees.forms import DepartmentForm
 from .models import Employee, TGUser, Department
 
 
 class DepartmentAdmin(admin.ModelAdmin):
-    list_display = ("name",)
-    search_fields = ['name', ]
+    list_display = ("name", "email")
+    search_fields = ['name', "email"]
     form = DepartmentForm
 
 
@@ -22,7 +22,6 @@ class EmployeeAdmin(admin.ModelAdmin):
     list_display = ("department", "full_name", "phone_number", "tguser")
     list_filter = ['department',]
     search_fields = ["full_name", "department__name", "phone_number", "tguser"]
-    form = EmployeeForm
     inlines = [TGUserInline]
 
 

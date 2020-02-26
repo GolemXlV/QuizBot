@@ -66,10 +66,8 @@ msgid "Sunday"
 msgstr "Воскресенье"
 
 #: employees/models.py:28
-#, fuzzy
-#| msgid "Days for poll"
 msgid "Time for poll"
-msgstr "Дни для прохождения опросов"
+msgstr "Время для прохождения опросов"
 
 #: employees/models.py:36
 msgid "Name of Department"
