@@ -3,6 +3,7 @@ version: '3.4'
 services:
 
   app:
+    command: sh -c "./wait-for postgres:5432 && python manage.py collectstatic --no-input && python manage.py migrate && python manage.py compilemessages && gunicorn  --access-logfile access.log --error-logfile error.log --capture-output --enable-stdio-inheritance quizbot.wsgi -b 0.0.0.0:8000"
     environment:
       - DJANGO_SETTINGS_MODULE=quizbot.settings.production
       - SECRET_KEY
