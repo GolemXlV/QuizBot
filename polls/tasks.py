@@ -21,7 +21,7 @@ def start_poll(delta_period=5):
     day = now.weekday() + 1
 
     start_time = now - timedelta(minutes=delta_period)
-    end_time = now
+    end_time = now - timedelta(seconds=1)
 
     job = group([send_poll.s(api, employee.id, employee.tguser.tg_id, employee.department_id) for employee
                  in Employee.objects.filter(tguser__isnull=False, department__isnull=False,

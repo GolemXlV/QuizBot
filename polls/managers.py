@@ -10,8 +10,8 @@ class QuestionManager(Manager):
         if question_id is not None:
             return self.filter(pk=question_id, department_id=dept_id).first()
 
-        ids = list(self.values_list('id', flat=True))
-        rand_ids = random.sample(ids, num)
+        ids = list(self.filter(department_id=dept_id).values_list('id', flat=True))
+        rand_ids = random.sample(ids, num if len(ids) > num else len(ids))
 
         if flat:
             return rand_ids
