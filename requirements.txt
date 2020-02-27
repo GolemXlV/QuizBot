@@ -1,4 +1,4 @@
-Django==2.2
+Django==2.2.10
 django-celery-beat
 django-celery-results
 psycopg2
