@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-02-26 06:50+0000\n"
+"POT-Creation-Date: 2020-02-27 11:08+0000\n"
 "PO-Revision-Date: 2020-02-18 00:06+0230\n"
 "Last-Translator: b'  <admin@test.ru>'\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -25,7 +25,7 @@ msgstr ""
 msgid "Employee management"
 msgstr "Управление персоналом"
 
-#: employees/forms.py:10 employees/models.py:26 employees/models.py:27
+#: employees/forms.py:10 employees/models.py:25 employees/models.py:26
 msgid "Days for poll"
 msgstr "Дни для прохождения опросов"
 
@@ -37,99 +37,99 @@ msgstr ""
 "Номер телефона должен быть введён в формате +99999999999. До 15 символов "
 "разрешено."
 
-#: employees/models.py:15
+#: employees/models.py:14
 msgid "Monday"
 msgstr "Понедельник"
 
-#: employees/models.py:16
+#: employees/models.py:15
 msgid "Tuesday"
 msgstr "Вторник"
 
-#: employees/models.py:17
+#: employees/models.py:16
 msgid "Wednesday"
 msgstr "Среда"
 
-#: employees/models.py:18
+#: employees/models.py:17
 msgid "Thursday"
 msgstr "Четверг"
 
-#: employees/models.py:19
+#: employees/models.py:18
 msgid "Friday"
 msgstr "Пятница"
 
-#: employees/models.py:20
+#: employees/models.py:19
 msgid "Saturday"
 msgstr "Суббота"
 
-#: employees/models.py:21
+#: employees/models.py:20
 msgid "Sunday"
 msgstr "Воскресенье"
 
-#: employees/models.py:29
+#: employees/models.py:28
 msgid "Time for poll"
 msgstr "Время для прохождения опросов"
 
-#: employees/models.py:37
+#: employees/models.py:36
 msgid "Name of Department"
 msgstr "Название отдела"
 
-#: employees/models.py:39 employees/models.py:41
+#: employees/models.py:38 employees/models.py:40
 msgid "Emails for sending"
 msgstr "Email-адреса для рассылки"
 
-#: employees/models.py:40
+#: employees/models.py:39
 msgid "Enter one or multiple email addresses (comma separator)"
 msgstr "Введите один или несколько email-адресов (разделитель запятая)"
 
-#: employees/models.py:48 employees/models.py:60 polls/models.py:16
+#: employees/models.py:47 employees/models.py:59 polls/models.py:16
 msgid "Department"
 msgstr "Отдел"
 
-#: employees/models.py:49
+#: employees/models.py:48
 msgid "Departments"
 msgstr "Отделы"
 
-#: employees/models.py:56
+#: employees/models.py:55
 msgid "Phone number"
 msgstr "Номер телефона"
 
-#: employees/models.py:57
+#: employees/models.py:56
 msgid "Enter the phone number in format +7999999999"
 msgstr "Введите номер телефона в формате +7999999999"
 
-#: employees/models.py:58
+#: employees/models.py:57
 msgid "Full name"
 msgstr "ФИО"
 
-#: employees/models.py:66 polls/models.py:44
+#: employees/models.py:65 polls/models.py:44
 msgid "Employee"
 msgstr "Сотрудник"
 
-#: employees/models.py:67
+#: employees/models.py:66
 msgid "Employees"
 msgstr "Сотрудники"
 
-#: employees/models.py:73
+#: employees/models.py:72
 msgid "Telegram ID"
 msgstr "ID Telegram"
 
-#: employees/models.py:74
+#: employees/models.py:73
 msgid "Telegram user name"
 msgstr "Имя пользователя Telegram"
 
-#: employees/models.py:75
+#: employees/models.py:74
 msgid "Telegram first name"
 msgstr "Имя Telegram"
 
-#: employees/models.py:76
+#: employees/models.py:75
 msgid "Telegram last name"
 msgstr "Фамилия Telegram"
 
-#: employees/models.py:82
+#: employees/models.py:81
 msgid "Telegram user"
 msgstr "Пользователь Telegram"
 
-#: employees/models.py:83
+#: employees/models.py:82
 msgid "Telegram users"
 msgstr "Пользователи Telegram"
 
@@ -204,6 +204,22 @@ msgstr "Дата закрытия"
 #: polls/models.py:63
 msgid "Polls"
 msgstr "Результаты тестов"
+
+#: templates/admin/index.html:102
+msgid "Recent actions"
+msgstr "Последние действия"
+
+#: templates/admin/index.html:103
+msgid "My actions"
+msgstr "Мои действия"
+
+#: templates/admin/index.html:107
+msgid "None available"
+msgstr "Не доступно"
+
+#: templates/admin/index.html:121
+msgid "Unknown content"
+msgstr "Неизвестное содержимое"
 
 #~ msgid "Days for Poll"
 #~ msgstr "Дни для прохождения опросов"

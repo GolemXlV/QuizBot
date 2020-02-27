@@ -69,6 +69,13 @@ CONSTANCE_CONFIG = {
     'DEFAULT_SUBJECT_FOR_EMAIL_SENDING': ("Тесты за неделю", _("Default subject for email sending")),
     'DEFAULT_FROM_EMAIL': ("bot@288077-yurdoos.tmweb.ru", _("Default from email for sending.")),
     'DEFAULT_TO_EMAIL': ("medvedev@zvezda-sb.ru", _("Default recipient email for sending (comma separator).")),
+    'DEFAULT_EMAIL_PS_MSG': ("""
+
+Расшифровка:
+    I.	    3/8 	= 	3 правильных ответа на 8 вопросов
+    II.	    --- 	= 	тест не назначался
+    III.    ХХХ	=	пользователь не отвечал на вопросы теста
+""", _("Default email post scriptum message.")),
 }
 CONSTANCE_BACKEND = 'constance.backends.database.DatabaseBackend'
 
@@ -77,7 +84,8 @@ CONSTANCE_CONFIG_FIELDSETS = {
     'Настройки бота': ('DEFAULT_ASK_NUMBER_MSG', 'DEFAULT_SUCCESS_AUTH_MSG', 'DEFAULT_START_POLL_MSG',
                        'DEFAULT_AFTER_AUTH_MSG', 'DEFAULT_ANSWER_MSG', 'DEFAULT_POLL_END_MSG',
                        'DEFAULT_PHONE_NUMBER_ERROR_MSG',),
-    "Настройки рассылки": ('DEFAULT_SUBJECT_FOR_EMAIL_SENDING', 'DEFAULT_FROM_EMAIL', 'DEFAULT_TO_EMAIL'),
+    "Настройки рассылки": ('DEFAULT_SUBJECT_FOR_EMAIL_SENDING', 'DEFAULT_FROM_EMAIL', 'DEFAULT_TO_EMAIL',
+                           'DEFAULT_EMAIL_PS_MSG'),
 }
 
 MIDDLEWARE = [

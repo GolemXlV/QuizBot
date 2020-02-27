@@ -43,14 +43,8 @@ def send_report(period=7):
                     user_entry.append("---")
                 else:
                     user_entry.append(f"{entry.votes[i]}/{entry.max_votes[i]}" if entry.votes[i] is not None else "XXX")
-            stat_list.append(",".join(user_entry) + f"\t{user}")
+            stat_list.append(", ".join(user_entry) + f"\t{user}")
         msg = "\n".join(stat_list)
-        msg += """
-
-Расшифровка:
-    i.	3/8 	= 	3 правильных ответа на 8 вопросов
-    ii.	--- 	= 	тест не назначался
-    iii.ХХХ	=	пользователь не отвечал на вопросы теста
-"""
+        msg += config.DEFAULT_EMAIL_PS_MSG
         send_mail(config.DEFAULT_SUBJECT_FOR_EMAIL_SENDING, msg, config.DEFAULT_FROM_EMAIL,
                   email.split(","))

@@ -3,8 +3,6 @@ from .models import Question, Choice, Poll
 
 
 class PollAdmin(admin.ModelAdmin):
-    verbose_name = "Тест"
-    verbose_name_plural = "Тест"
     list_display = ("employee", "state", "closed", "votes", "date_created", "date_modified", "date_closed")
     list_filter = ("state", "closed", "date_created", "date_modified", "date_closed")
     search_fields = ['employee', "votes"]

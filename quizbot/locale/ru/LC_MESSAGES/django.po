@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-02-26 06:50+0000\n"
+"POT-Creation-Date: 2020-02-27 11:08+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -70,10 +70,14 @@ msgstr "Отправитель письма по умолчанию"
 msgid "Default recipient email for sending (comma separator)."
 msgstr "Получатели письма для рассылки (через запятую)"
 
-#: quizbot/settings/settings.py:161
+#: quizbot/settings/settings.py:78
+msgid "Default email post scriptum message."
+msgstr "Пост скриптум письма рассылки"
+
+#: quizbot/settings/settings.py:169
 msgid "Russian"
 msgstr "Русский"
 
-#: quizbot/settings/settings.py:162
+#: quizbot/settings/settings.py:170
 msgid "English"
 msgstr "Английский"
