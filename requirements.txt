@@ -7,3 +7,5 @@ gunicorn
 python-telegram-bot
 cached-property
 django-constance[database]==2.6.0
+pymorphy2[fast]
+pymorphy2-dicts-ru
