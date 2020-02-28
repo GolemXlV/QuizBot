@@ -1,4 +1,6 @@
 from django.contrib import admin
+
+from polls.forms import ChoiceForm
 from .models import Question, Choice, Poll
 
 
@@ -10,6 +12,7 @@ class PollAdmin(admin.ModelAdmin):
 
 class ChoiceInline(admin.StackedInline):
     model = Choice
+    form = ChoiceForm
     extra = 2
 
 

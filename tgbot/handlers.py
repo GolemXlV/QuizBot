@@ -42,14 +42,14 @@ def send_question(api, qid, uid, pid, st):
 
 
 def send_buttons(api: TelegramBotApi, update):
-    # buttons_list = [
-    #     KeyboardButton("Пройти тест"),
+    buttons_list = [
+        KeyboardButton("Пройти тест"),
     #     KeyboardButton("Помощь"),
-    # ]
-    # reply_markup = ReplyKeyboardMarkup(build_menu(buttons_list, n_cols=len(buttons_list)), resize_keyboard=True)
+    ]
+    reply_markup = ReplyKeyboardMarkup(build_menu(buttons_list, n_cols=len(buttons_list)), resize_keyboard=True)
     msg = config.DEFAULT_AFTER_AUTH_MSG
     api.bot.send_message(update.message.chat_id, msg,
-                         # reply_markup=reply_markup
+                         reply_markup=reply_markup
                          )
 
 
@@ -150,18 +150,18 @@ def start_poll_handler(api: TelegramBotApi, update):
     if not user:
         api.bot.send_message(update.message.chat_id, "Вы не авторизовались.")
         return
-    poll = api.create_poll(user.employee_id, config.POLL_QUESTIONS_NUM)
+    poll = api.create_poll(user.employee_id, config.POLL_QUESTIONS_NUM, user.employee.department_id)
     api.bot.send_message(update.message.chat_id, config.DEFAULT_START_POLL_MSG)
     question_id = api.get_next_question_id(poll)
-    return get_question_handler(api, update, qid=question_id, pid=poll.pk, st=poll.state)
+    return get_question_handler(api, update, uid=user.tg_id, qid=question_id, pid=poll.pk, st=poll.state)
 
 
 handlers = [
     CommandHandler("start", start_handler),
     # CommandHandler("get_question", get_question_handler),
-    # CommandHandler("start_poll", start_poll_handler),
+    CommandHandler("start_poll", start_poll_handler),
     CommandHandler("help", help_handler),
-    # MessageHandler(filter_get_question, start_poll_handler),
+    MessageHandler(filter_get_question, start_poll_handler),
     # MessageHandler(filter_help_command, help_handler),
     MessageHandler(Filters.contact, contact_callback),
     CallbackQueryHandler(answer_handler),
