@@ -115,7 +115,7 @@ def answer_handler(api: TelegramBotApi, update):
             callback_obj["st"] = int(callback_obj["st"]) + 1
             poll = api.update_poll(callback_obj["pid"], callback_obj["st"], answer.votes)
             if not poll.closed:
-                question_id = api.get_next_question_id(poll)
+                question_id = api.get_next_question_id(poll, callback_obj["st"])
                 get_question_handler(api, update, uid=callback_obj["u"], qid=question_id, pid=poll.pk, st=int(poll.state))
             else:
                 msg_data = dict(votes=poll.votes, max_votes=poll.max_votes)

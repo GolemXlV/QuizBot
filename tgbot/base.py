@@ -75,8 +75,8 @@ class TelegramBotApi:
     def get_poll(self, poll_id):
         return Poll.objects.filter(pk=poll_id).first()
 
-    def get_next_question_id(self, poll):
-        question_id = poll.questions.values_list('id', flat=True)[poll.state]
+    def get_next_question_id(self, poll, state=None):
+        question_id = poll.questions.values_list('id', flat=True)[state if state is not None else poll.state]
         return question_id
 
     def update_poll(self, poll_id, state, vote):
