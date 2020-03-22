@@ -53,6 +53,8 @@ services:
       - 4444:4444
     environment:
       - tors=25
+    cap_add:
+      - ALL
     networks:
       - main
 

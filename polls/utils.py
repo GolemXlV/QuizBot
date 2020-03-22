@@ -25,10 +25,12 @@ def send_report(period=7):
         rows = cursor.fetchall()
     for row in rows:
         full_name, phone_number, day, votes, max_votes, email = row
-        processed_data[f"{phone_number}\t{full_name}"].days.append(day)
-        processed_data[f"{phone_number}\t{full_name}"].votes.append(votes)
-        processed_data[f"{phone_number}\t{full_name}"].max_votes.append(max_votes)
-        email_data["%s" % ",".join(email)] = processed_data
+        data = email_data["%s" % ",".join(email)].copy()
+        data[f"{phone_number}\t{full_name}"].days.append(day)
+        data[f"{phone_number}\t{full_name}"].votes.append(votes)
+        data[f"{phone_number}\t{full_name}"].max_votes.append(max_votes)
+        print(f"{email}: {data.keys()}, {data.values()}")
+        email_data["%s" % ",".join(email)] = data
 
     # headers = "Сотрудник|Номер телефона|Понедельник|Вторник|Среда|Четверг|Пятница|Суббота|Воскресенье".split('|')
     # stat_list = [",".join(headers)]
